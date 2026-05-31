@@ -1,0 +1,255 @@
+2026-05-16 18:56:33 [INFO] Dimensiones del dataset: (100000, 18)
+2026-05-16 18:56:33 [INFO] Distribución de clases:
+class
+GALAXY    59445
+STAR      21594
+QSO       18961
+Name: count, dtype: int64
+
+2026-05-16 18:56:33 [INFO] Features usadas (8): ['alpha', 'delta', 'u', 'g', 'r', 'i', 'z', 'redshift']
+2026-05-16 18:56:33 [INFO] Clases: ['GALAXY' 'QSO' 'STAR']
+
+2026-05-16 18:56:33 [INFO] Train: 60,000  |  Val: 20,000  |  Test: 20,000
+2026-05-16 18:56:33 [INFO] 
+════════════════════════════════════════════════════════════
+2026-05-16 18:56:33 [INFO]   Entrenamiento 1 — MLP Superficial
+2026-05-16 18:56:33 [INFO] ════════════════════════════════════════════════════════════
+2026-05-16 18:56:33 [WARNING] TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+2026-05-16 18:56:33 [INFO] Model: "Shallow_MLP"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense (Dense)                        │ (None, 64)                  │             576 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 32)                  │           2,080 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_2 (Dense)                      │ (None, 3)                   │              99 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 2,755 (10.76 KB)
+ Trainable params: 2,755 (10.76 KB)
+ Non-trainable params: 0 (0.00 B)
+
+2026-05-16 18:57:27 [INFO]   → Guardado: resultados\loss_Entrenamiento_1.png
+2026-05-16 18:57:27 [INFO] 
+  ── Evaluación entrenamiento ──
+2026-05-16 18:57:29 [INFO] 
+  [Entrenamiento] Matriz de confusión:
+2026-05-16 18:57:29 [INFO]         GALAXY    QSO   STAR
+GALAXY   34970    338    359
+QSO        914  10458      5
+STAR         2      0  12954
+2026-05-16 18:57:29 [INFO] 
+  [Entrenamiento] Métricas por clase:
+2026-05-16 18:57:29 [INFO]     GALAXY  Precisión=0.9745  Recall=0.9805
+2026-05-16 18:57:29 [INFO]     QSO  Precisión=0.9687  Recall=0.9192
+2026-05-16 18:57:29 [INFO]     STAR  Precisión=0.9727  Recall=0.9998
+2026-05-16 18:57:29 [INFO]   → Guardado: resultados\cm_Entrenamiento_1_—_MLP_Superficial_Entrenamiento.png
+2026-05-16 18:57:29 [INFO] 
+  ── Evaluación prueba ──
+2026-05-16 18:57:29 [INFO] 
+  [Prueba] Matriz de confusión:
+2026-05-16 18:57:29 [INFO]         GALAXY   QSO  STAR
+GALAXY   11647   121   121
+QSO        309  3480     3
+STAR         6     0  4313
+2026-05-16 18:57:29 [INFO] 
+  [Prueba] Métricas por clase:
+2026-05-16 18:57:29 [INFO]     GALAXY  Precisión=0.9737  Recall=0.9796
+2026-05-16 18:57:29 [INFO]     QSO  Precisión=0.9664  Recall=0.9177
+2026-05-16 18:57:29 [INFO]     STAR  Precisión=0.9721  Recall=0.9986
+2026-05-16 18:57:30 [INFO]   → Guardado: resultados\cm_Entrenamiento_1_—_MLP_Superficial_Prueba.png
+2026-05-16 18:57:30 [INFO] 
+  Precisión final en prueba: 0.9720  |  pérdida: 0.0952
+2026-05-16 18:57:30 [INFO] 
+════════════════════════════════════════════════════════════
+2026-05-16 18:57:30 [INFO]   Entrenamiento 2 — MLP Profundo
+2026-05-16 18:57:30 [INFO] ════════════════════════════════════════════════════════════
+2026-05-16 18:57:30 [INFO] Model: "Deep_MLP"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense_3 (Dense)                      │ (None, 256)                 │           2,304 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_4 (Dense)                      │ (None, 128)                 │          32,896 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_5 (Dense)                      │ (None, 64)                  │           8,256 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_6 (Dense)                      │ (None, 32)                  │           2,080 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_7 (Dense)                      │ (None, 3)                   │              99 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 45,635 (178.26 KB)
+ Trainable params: 45,635 (178.26 KB)
+ Non-trainable params: 0 (0.00 B)
+
+2026-05-16 18:57:49 [INFO]   → Guardado: resultados\loss_Entrenamiento_2.png
+2026-05-16 18:57:49 [INFO] 
+  ── Evaluación entrenamiento ──
+2026-05-16 18:57:51 [INFO] 
+  [Entrenamiento] Matriz de confusión:
+2026-05-16 18:57:51 [INFO]         GALAXY    QSO   STAR
+GALAXY   34748    400    519
+QSO       1011  10359      7
+STAR         2      0  12954
+2026-05-16 18:57:51 [INFO] 
+  [Entrenamiento] Métricas por clase:
+2026-05-16 18:57:51 [INFO]     GALAXY  Precisión=0.9717  Recall=0.9742
+2026-05-16 18:57:51 [INFO]     QSO  Precisión=0.9628  Recall=0.9105
+2026-05-16 18:57:51 [INFO]     STAR  Precisión=0.9610  Recall=0.9998
+2026-05-16 18:57:51 [INFO]   → Guardado: resultados\cm_Entrenamiento_2_—_MLP_Profundo_Entrenamiento.png
+2026-05-16 18:57:51 [INFO] 
+  ── Evaluación prueba ──
+2026-05-16 18:57:52 [INFO] 
+  [Prueba] Matriz de confusión:
+2026-05-16 18:57:52 [INFO]         GALAXY   QSO  STAR
+GALAXY   11582   141   166
+QSO        331  3457     4
+STAR         4     0  4315
+2026-05-16 18:57:52 [INFO] 
+  [Prueba] Métricas por clase:
+2026-05-16 18:57:52 [INFO]     GALAXY  Precisión=0.9719  Recall=0.9742
+2026-05-16 18:57:52 [INFO]     QSO  Precisión=0.9608  Recall=0.9117
+2026-05-16 18:57:52 [INFO]     STAR  Precisión=0.9621  Recall=0.9991
+2026-05-16 18:57:52 [INFO]   → Guardado: resultados\cm_Entrenamiento_2_—_MLP_Profundo_Prueba.png
+2026-05-16 18:57:52 [INFO] 
+  Precisión final en prueba: 0.9677  |  pérdida: 0.1074
+2026-05-16 18:57:52 [INFO] 
+════════════════════════════════════════════════════════════
+2026-05-16 18:57:52 [INFO]   Entrenamiento 3 — MLP Regularizado
+2026-05-16 18:57:52 [INFO] ════════════════════════════════════════════════════════════
+2026-05-16 18:57:52 [INFO] Model: "Regularized_Deep_MLP"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense_8 (Dense)                      │ (None, 256)                 │           2,304 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization                  │ (None, 256)                 │           1,024 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout (Dropout)                    │ (None, 256)                 │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_9 (Dense)                      │ (None, 128)                 │          32,896 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_1                │ (None, 128)                 │             512 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_1 (Dropout)                  │ (None, 128)                 │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_10 (Dense)                     │ (None, 64)                  │           8,256 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_2 (Dropout)                  │ (None, 64)                  │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_11 (Dense)                     │ (None, 32)                  │           2,080 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_12 (Dense)                     │ (None, 3)                   │              99 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 47,171 (184.26 KB)
+ Trainable params: 46,403 (181.26 KB)
+ Non-trainable params: 768 (3.00 KB)
+
+2026-05-16 18:59:40 [INFO]   → Guardado: resultados\loss_Entrenamiento_3.png
+2026-05-16 18:59:40 [INFO] 
+  ── Evaluación entrenamiento ──
+2026-05-16 18:59:42 [INFO] 
+  [Entrenamiento] Matriz de confusión:
+2026-05-16 18:59:42 [INFO]         GALAXY    QSO   STAR
+GALAXY   34847    470    350
+QSO        868  10504      5
+STAR        29      0  12927
+2026-05-16 18:59:42 [INFO] 
+  [Entrenamiento] Métricas por clase:
+2026-05-16 18:59:42 [INFO]     GALAXY  Precisión=0.9749  Recall=0.9770
+2026-05-16 18:59:42 [INFO]     QSO  Precisión=0.9572  Recall=0.9233
+2026-05-16 18:59:42 [INFO]     STAR  Precisión=0.9733  Recall=0.9978
+2026-05-16 18:59:42 [INFO]   → Guardado: resultados\cm_Entrenamiento_3_—_MLP_Regularizado_Entrenamiento.png
+2026-05-16 18:59:42 [INFO] 
+  ── Evaluación prueba ──
+2026-05-16 18:59:43 [INFO] 
+  [Prueba] Matriz de confusión:
+2026-05-16 18:59:43 [INFO]         GALAXY   QSO  STAR
+GALAXY   11609   171   109
+QSO        289  3499     4
+STAR         8     0  4311
+2026-05-16 18:59:43 [INFO] 
+  [Prueba] Métricas por clase:
+2026-05-16 18:59:43 [INFO]     GALAXY  Precisión=0.9751  Recall=0.9764
+2026-05-16 18:59:43 [INFO]     QSO  Precisión=0.9534  Recall=0.9227
+2026-05-16 18:59:43 [INFO]     STAR  Precisión=0.9745  Recall=0.9981
+2026-05-16 18:59:43 [INFO]   → Guardado: resultados\cm_Entrenamiento_3_—_MLP_Regularizado_Prueba.png
+2026-05-16 18:59:44 [INFO] 
+  Precisión final en prueba: 0.9710  |  pérdida: 0.0990
+2026-05-16 18:59:44 [INFO] 
+════════════════════════════════════════════════════════════
+2026-05-16 18:59:44 [INFO]   Entrenamiento 4 — CNN 1D
+2026-05-16 18:59:44 [INFO] ════════════════════════════════════════════════════════════
+2026-05-16 18:59:44 [INFO] Model: "CNN_1D"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ reshape (Reshape)                    │ (None, 8, 1)                │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d (Conv1D)                      │ (None, 6, 32)               │             128 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_2                │ (None, 6, 32)               │             128 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_1 (Conv1D)                    │ (None, 4, 64)               │           6,208 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_3                │ (None, 4, 64)               │             256 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ flatten (Flatten)                    │ (None, 256)                 │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_13 (Dense)                     │ (None, 64)                  │          16,448 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_3 (Dropout)                  │ (None, 64)                  │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_14 (Dense)                     │ (None, 3)                   │             195 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 23,363 (91.26 KB)
+ Trainable params: 23,171 (90.51 KB)
+ Non-trainable params: 192 (768.00 B)
+
+2026-05-16 19:00:01 [INFO]   → Guardado: resultados\loss_Entrenamiento_4.png
+2026-05-16 19:00:01 [INFO] 
+  ── Evaluación entrenamiento ──
+2026-05-16 19:00:04 [INFO] 
+  [Entrenamiento] Matriz de confusión:
+2026-05-16 19:00:04 [INFO]         GALAXY   QSO   STAR
+GALAXY   34413   346    908
+QSO       1392  9967     18
+STAR       251     0  12705
+2026-05-16 19:00:04 [INFO] 
+  [Entrenamiento] Métricas por clase:
+2026-05-16 19:00:04 [INFO]     GALAXY  Precisión=0.9544  Recall=0.9648
+2026-05-16 19:00:04 [INFO]     QSO  Precisión=0.9665  Recall=0.8761
+2026-05-16 19:00:04 [INFO]     STAR  Precisión=0.9321  Recall=0.9806
+2026-05-16 19:00:04 [INFO]   → Guardado: resultados\cm_Entrenamiento_4_—_CNN_1D_Entrenamiento.png
+2026-05-16 19:00:04 [INFO] 
+  ── Evaluación prueba ──
+2026-05-16 19:00:05 [INFO] 
+  [Prueba] Matriz de confusión:
+2026-05-16 19:00:05 [INFO]         GALAXY   QSO  STAR
+GALAXY   11488   114   287
+QSO        441  3344     7
+STAR        85     0  4234
+2026-05-16 19:00:05 [INFO] 
+  [Prueba] Métricas por clase:
+2026-05-16 19:00:05 [INFO]     GALAXY  Precisión=0.9562  Recall=0.9663
+2026-05-16 19:00:05 [INFO]     QSO  Precisión=0.9670  Recall=0.8819
+2026-05-16 19:00:05 [INFO]     STAR  Precisión=0.9351  Recall=0.9803
+2026-05-16 19:00:05 [INFO]   → Guardado: resultados\cm_Entrenamiento_4_—_CNN_1D_Prueba.png
+2026-05-16 19:00:06 [INFO] 
+  Precisión final en prueba: 0.9533  |  pérdida: 0.1630
+2026-05-16 19:00:06 [INFO] 
+════════════════════════════════════════════════════════════
+2026-05-16 19:00:06 [INFO]   RESUMEN COMPARATIVO
+2026-05-16 19:00:06 [INFO] ════════════════════════════════════════════════════════════
+2026-05-16 19:00:06 [INFO] 
+                            Modelo  Precisión prueba  Pérdida prueba  Mejor precisión entrenamiento  Mejor precisión validación  Mejor pérdida entrenamiento  Mejor pérdida validación
+ Entrenamiento 1 — MLP Superficial           0.97200        0.095183                       0.973383                     0.97275                     0.088459                  0.096122
+    Entrenamiento 2 — MLP Profundo           0.96770        0.107413                       0.969383                     0.96860                     0.099347                  0.108495
+Entrenamiento 3 — MLP Regularizado           0.97095        0.098999                       0.970050                     0.97150                     0.100933                  0.099961
+          Entrenamiento 4 — CNN 1D           0.95330        0.163028                       0.965433                     0.95145                     0.113850                  0.166759
+2026-05-16 19:00:06 [INFO] → Guardado: resultados\model_comparison.png
+2026-05-16 19:00:06 [INFO] → Guardado: resultados\metricas_finales.txt
